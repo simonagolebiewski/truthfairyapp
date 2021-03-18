@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
-import { Text, Input, Button } from 'react-native-elements';
 import { Context as AuthContext } from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
@@ -39,12 +38,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         marginBottom: 250
-    },
-    errorMessage: {
-        fontSize: 16,
-        color: 'red',
-        marginLeft: 15,
-        marginBottom: 15
     }
 });
 
