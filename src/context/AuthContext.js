@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createDataContext from './createDataContext';
 import authenticationAPI from '../api/authentication';
+import { navigate } from '../navigationRef';
 
 const authReducer = (state, action) => {
     switch(action.type) {
@@ -21,6 +22,7 @@ const signup = dispatch =>  async ({ email, password }) => {
                 type: 'signup', 
                 payload: response.data.token 
             });
+            navigate('mainFlow');
         } catch (err) {
             dispatch({ 
                 type: 'add_error', 
