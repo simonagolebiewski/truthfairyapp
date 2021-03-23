@@ -3,12 +3,14 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import { SafeAreaView } from 'react-navigation';
 import Spacer from '../components/Spacer';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
 
 const RecordingScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
+    const [recording, setRecording] = useState(false);
+    const [cameraRef, setCameraRef] = useState(null);
+    const [type, setType] = useState(Camera.Constants.Type.front);
     
     useEffect(() => {
         (async () => {
@@ -27,7 +29,7 @@ const RecordingScreen = () => {
     return (
         <SafeAreaView forceInset={{ top: 'always' }} style={styles.container}>
             <Text style={{ fontSize: 48 }}>Record</Text>
-            <Camera style={styles.camera} type={type}>
+            <Camera style={styles.camera} type={type} ref={ref => { setCameraRef(ref) }}>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                 style={styles.button}
@@ -38,10 +40,30 @@ const RecordingScreen = () => {
                         : Camera.Constants.Type.back
                     );
                 }}>
-                <Text style={styles.text}> Flip </Text>
+                <MaterialIcons name="flip-camera-ios" size={24} color="white" />
                 </TouchableOpacity>
             </View>
             </Camera>
+            <TouchableOpacity 
+                style={{alignSelf: 'center'}} 
+                onPress={ async() => {
+                        if(!recording){
+                            setRecording(true)
+                        let video = await cameraRef.recordAsync();
+                        console.log('video', video);
+                        } else {
+                            setRecording(false)
+                            cameraRef.stopRecording()
+                        }
+                    }}>
+                <View style={{ 
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'}}
+                    >
+                    <MaterialCommunityIcons name="record-circle" size={40} color={ recording ? "blue":'red' }/>
+                </View>
+          </TouchableOpacity>
         </SafeAreaView>
     );
     
