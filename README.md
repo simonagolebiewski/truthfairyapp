@@ -1,2 +1,2 @@
 # truthfairyapp
-Dentist video review software
+Video review software
